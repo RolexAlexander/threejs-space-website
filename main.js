@@ -32,7 +32,7 @@ const geometry = new THREE.BufferGeometry();
 const vertices = [];
 
 // load sprite whoch is the texture for the stars
-const sprite = new THREE.TextureLoader().load( './assets/star.png' );
+const sprite = new THREE.TextureLoader().load( './star.png' );
 sprite.colorSpace = THREE.SRGBColorSpace;
 
 // create 10000 stars' vertices randomly
@@ -60,7 +60,7 @@ scene.add( particles );
 let line, uniforms;
 
 const loader = new FontLoader(); // initialise loader
-loader.load( './assets/helvetiker_bold.typeface.json', function ( font ) {
+loader.load( './helvetiker_bold.typeface.json', function ( font ) {
 	init( font );
 	animate();
 } ); // load the font
