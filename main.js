@@ -1,95 +1,190 @@
-import { Camera } from 'three';
-import './style.css'
-import * as THREE from 'three';
-import { Scene } from 'three';
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
+import { Camera } from 'three'; // import camerara
+import './style.css' // import style sheet
+import * as THREE from 'three'; // import everything from three js library need to be changed to just import what we need
+import { Scene } from 'three'; // import scene
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls' // add orbitals for user to navigate the scene
+import { FontLoader } from 'three/addons/loaders/FontLoader.js'; // import loader for fonts
+import { TextGeometry } from 'three/addons/geometries/TextGeometry.js'; // import text geometry
+import Stats from 'three/addons/libs/stats.module.js'; // and import stats
 
 
+//  define variables needed
+let starGeo, stars, material;
+
+//  setup scene camerara and renderer
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 const renderer = new THREE.WebGLRenderer({
   canvas: document.querySelector('#canvas'),
-})
+});
 
+// configure the renderer
 renderer.setPixelRatio( window.devicePixelRatio );
 renderer.setSize( window.innerWidth, window.innerHeight);
 camera.position.setZ(30);
 
-const geometry = new THREE.TorusGeometry(10,3,16,100);
-const material = new THREE.MeshStandardMaterial({color: 0xFF6347});
-const torus = new THREE.Mesh(geometry,material);
-scene.add(torus)
+// define orbitals
+const controls = new OrbitControls( camera, document.querySelector('#canvas') );
+controls.update();
 
-const pointlight = new THREE.PointLight(0xffffff);
-pointlight.position.set(0, 5, 5);
+// define geometry for stars and vertices
+const geometry = new THREE.BufferGeometry();
+const vertices = [];
 
-const ambientlight = new THREE.AmbientLight(0xffffff);
+// load sprite whoch is the texture for the stars
+const sprite = new THREE.TextureLoader().load( './assets/star.png' );
+sprite.colorSpace = THREE.SRGBColorSpace;
 
-const lighthelper = new THREE.PointLightHelper(pointlight);
-const gridhelper = new THREE.GridHelper(200,50);
-scene.add(pointlight, ambientlight, lighthelper, gridhelper);
+// create 10000 stars' vertices randomly
+for ( let i = 0; i < 10000; i ++ ) {
 
-const controls = new OrbitControls(camera, renderer.domElement);
+	const x = 2000 * Math.random() - 1000;
+	const y = 2000 * Math.random() - 1000;
+	const z = 2000 * Math.random() - 1000;
 
-function addstar() {
-  const geometry = new THREE.SphereGeometry(0.25, 24, 24);
-  const material = new THREE.MeshStandardMaterial({color: 0xffffff});
-  const star = new THREE.Mesh( geometry, material );
+	vertices.push( x, y, z );
 
-  const [x,y,z] = Array(3).fill().map(() => THREE.MathUtils.randFloatSpread( 100 ));
-  star.position.set(x,y,z);
-  scene.add(star);
 }
-Array(200).fill().forEach(addstar)
 
-const spaceTexture = new THREE.TextureLoader().load('space.jpg');
-scene.background = spaceTexture;
+// add them to the geometry
+geometry.setAttribute( 'position', new THREE.Float32BufferAttribute( vertices, 3 ) );
 
-// Texture box
-const extra = new THREE.TextureLoader().load('test.jpg');
+// define our point material
+material = new THREE.PointsMaterial( { color: 0xaaaaaa, size: 3, map: sprite } );
 
-const rolex = new THREE.Mesh(
-  new THREE.BoxGeometry(3,3,3),
-  new THREE.MeshBasicMaterial( { map: extra})
-);
+// create our stars and add it to our scene
+const particles = new THREE.Points( geometry, material );
+scene.add( particles );
 
-scene.add(rolex);
+// add fancy text
+let line, uniforms;
 
-//  moon
+const loader = new FontLoader(); // initialise loader
+loader.load( './assets/helvetiker_bold.typeface.json', function ( font ) {
+	init( font );
+	animate();
+} ); // load the font
 
-const moontexture = new THREE.TextureLoader().load('moon.jpg');
-const normaltexture = new THREE.TextureLoader().load('normal.jpg');
+camera = new THREE.PerspectiveCamera( 30, window.innerWidth / window.innerHeight, 1, 10000 );
+camera.position.z = 400;
 
-const moon = new THREE.Mesh(
-  new THREE.SphereGeometry(3,32,32),
-  new THREE.MeshStandardMaterial({map: moontexture, normalMap: normaltexture})
-)
-moon.position.z = 30;
-moon.position.setX(-10);
-scene.add(moon);
+scene = new THREE.Scene();
+scene.background = new THREE.Color( 0x050505 );
+            
+renderer = new THREE.WebGLRenderer({
+    canvas: document.querySelector('#canvas'),
+});
+renderer.setPixelRatio( window.devicePixelRatio );
+renderer.setSize( window.innerWidth, window.innerHeight );
+function init( font ) {
 
-function moveCamera(){
-  const t = document.body.getBoundingClientRect().top;
-  moon.rotation.x += 0.05;
-  moon.rotation.y += 0.05;
-  moon.rotation.x += 0.05;
+	uniforms = {
 
-  rolex.rotation.y += 0.01;
-  rolex.rotation.z += 0.01;
+		amplitude: { value: 5.0 },
+		opacity: { value: 0.3 },
+		color: { value: new THREE.Color( 0xffffff ) }
 
-  camera.position.z = t * -0.01;
-  camera.position.x = t * -0.0002;
-  camera.rotation.y = t * -0.0002;
+	};
+
+	const shaderMaterial = new THREE.ShaderMaterial( {
+
+		uniforms: uniforms,
+		vertexShader: document.getElementById( 'vertexshader' ).textContent,
+		fragmentShader: document.getElementById( 'fragmentshader' ).textContent,
+		blending: THREE.AdditiveBlending,
+		depthTest: false,
+		transparent: true
+
+	});
+
+
+	const text_te_geometry = new TextGeometry( 'Happy New Year', {
+
+		font: font,
+
+			size: 10,
+			height: 15,
+			curveSegments: 10,
+
+			bevelThickness: 5,
+			bevelSize: 1.5,
+			bevelEnabled: true,
+			bevelSegments: 10,
+
+		}
+	);
+
+	text_te_geometry.x = -300;
+	text_te_geometry.y = -300000;
+	text_te_geometry.z = -300;
+
+	const count = text_te_geometry.attributes.position.count;
+
+	const displacement = new THREE.Float32BufferAttribute( count * 3, 3 );
+	text_te_geometry.setAttribute( 'displacement', displacement );
+
+	const customColor = new THREE.Float32BufferAttribute( count * 3, 3 );
+	text_te_geometry.setAttribute( 'customColor', customColor );
+
+	const color = new THREE.Color( 0xffffff );
+
+	for ( let i = 0, l = customColor.count; i < l; i ++ ) {
+
+		color.setHSL( i / l, 0.5, 0.5 );
+		color.toArray( customColor.array, i * customColor.itemSize );
+
+	}
+
+	line = new THREE.Line( text_te_geometry, shaderMaterial );
+	line.rotation.x = 0.2;
+	scene.add( line );
 }
-document.body.onscroll = moveCamera;
 
+// animate the scene
 function animate() {
-  requestAnimationFrame( animate );
-  torus.rotation.x += 0.01;
-  torus.rotation.y += 0.01;
-  torus.rotation.z += 0.01;
-  controls.update();
-  renderer.render( scene, camera );
+    // function to animate the scene
+    const positions = geometry.attributes.position.array;
+    for (let i = 0; i < positions.length; i += 3) {
+        positions[i + 1] -= 0.1; // Update y position for each star
+        if (positions[i + 1] < -500) {
+            positions[i + 1] = 500; // Reset y position if star goes below -500
+        }
+    }
+
+	// rotate the stars
+    geometry.attributes.position.needsUpdate = true;
+    particles.rotation.y += 0.002;
+	particles.position.x += 0.01;
+
+	// rotate words
+	const time = Date.now() * 0.001;
+
+	line.rotation.y = 0.25 * time;
+
+	uniforms.amplitude.value = Math.sin( 0.5 * time );
+	uniforms.color.value.offsetHSL( 0.0005, 0, 0 );
+
+	const attributes = line.geometry.attributes;
+	const array = attributes.displacement.array;
+
+	for ( let i = 0, l = array.length; i < l; i += 3 ) {
+
+		array[ i ] += 0.3 * ( 0.5 - Math.random() );
+		array[ i + 1 ] += 0.3 * ( 0.5 - Math.random() );
+		array[ i + 2 ] += 0.3 * ( 0.5 - Math.random() );
+
+	}
+
+	attributes.displacement.needsUpdate = true;
+
+	// update orbital controls
+	controls.update();
+
+	// add the scene and renderer to the scene
+    renderer.render(scene, camera);
+    requestAnimationFrame(animate);
 }
 
+// run the three js scene
+// animate the scene
 animate();

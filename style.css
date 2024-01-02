@@ -16,18 +16,30 @@ canvas {
   font-style: normal;
 }
 
+.pg_header{
+  font-size: 30;
+  background: var(--dark-bg);
+  grid-column: 2 / span 5;
+  font-size: 2.5rem;
+  padding: 2rem;
+  margin-bottom: var(--spacing);
+}
 
-main {
-  width: 100vw;
+.page_one {
   color: white;
-  z-index: 99;
-  position: absolute;
-  width: 100%;
-  margin: 0px auto;
-  padding: 120px 0px;
-  
-  display: grid;
-  grid-template-columns: repeat(12, 1fr);
+  text-align: center;
+  position: relative;
+  width: 500px;
+  height: 600px;
+  left: 100px;
+  top: 50px;
+  background-color: #0b0b0b;
+  font-family: elevon, sans-serif;
+  font-weight: 700;
+  font-style: normal;
+  border: 2px solid black;
+  border-radius: 10px;
+  margin-bottom: 300px;
 }
 
 h1, h2, h3, blockquote {
@@ -36,30 +48,53 @@ h1, h2, h3, blockquote {
   font-style: normal;
 }
 
-canvas {
-  position: fixed;
-  top: 0;
-  left: 0;
+.section_one {
+  grid-column: 2 / 8;
+  padding: 1rem;
+  background: var(--dark-bg);
+  font-size: 1.25rem;
+  line-height: 1.5;
+  margin-bottom: var(--spacing);
+  color: white;
+  text-align: center;
+  position: relative;
+  width: 500px;
+  height: 600px;
+  padding-top: 30px;
+  left: 100px;
+  top: 50px;
+  background-color: #0b0b0b;
+  font-family: elevon, sans-serif;
+  font-weight: 700;
+  font-style: normal;
+  border: 2px solid black;
+  border-radius: 10px;
+  margin-top: 60px;
 }
 
-
-
-  header {
-    background: var(--dark-bg);
-    grid-column: 2 / span 5;
-    font-size: 2.5rem;
-    padding: 2rem;
-    margin-bottom: var(--spacing);
-  }
-
-  section {
-    grid-column: 2 / 8;
-    padding: 1rem;
-    background: var(--dark-bg);
-    font-size: 1.25rem;
-    line-height: 1.5;
-    margin-bottom: var(--spacing);
-  }
+.section_two {
+  grid-column: 2 / 8;
+  padding: 1rem;
+  background: var(--dark-bg);
+  font-size: 1.25rem;
+  line-height: 1.5;
+  margin-bottom: var(--spacing);
+  color: black;
+  text-align: center;
+  position: relative;
+  width: 500px;
+  height: 600px;
+  padding-top: 30px;
+  left: 100px;
+  top: 50px;
+  background-color: whitesmoke;
+  font-family: elevon, sans-serif;
+  font-weight: 700;
+  font-style: normal;
+  border: 2px solid whitesmoke;
+  border-radius: 10px;
+  margin-top: 60px;
+}
 
   blockquote {
     margin: 0;
@@ -79,3 +114,41 @@ canvas {
   .left {
     grid-column: 6 / 12;
   }
+
+.quote{
+  font-size: 50;
+  color: white;
+  text-align: center;
+  position: relative;
+  width: 300px;
+  height: 200px;
+  left: 100px;
+  top: 50px;
+  background-color: #0b0b0b;
+  font-family: elevon, sans-serif;
+  font-weight: 700;
+  font-style: normal;
+  border: 2px solid black;
+  border-radius: 100px;
+  margin-bottom: 300px;
+  padding-top: 50px;
+}
+
+.quote_two{
+  font-size: 50;
+  color: black;
+  text-align: center;
+  position: relative;
+  width: 800px;
+  height: 100px;
+  left: 100px;
+  top: 50px;
+  background-color: whitesmoke;
+  font-family: elevon, sans-serif;
+  font-weight: 700;
+  font-style: normal;
+  border: 2px solid whitesmoke;
+  border-radius: 100px;
+  margin-bottom: 300px;
+  padding-top: 20px;
+}

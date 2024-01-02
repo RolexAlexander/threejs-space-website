@@ -12,6 +12,8 @@
     "vite": "^4.4.5"
   },
   "dependencies": {
-    "three": "^0.157.0"
+    "@babel/runtime": "^7.23.6",
+    "three": "^0.157.0",
+    "three-nebula": "^10.0.3"
   }
 }
