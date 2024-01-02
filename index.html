@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAaVJREFUOE+tk73LqXEYxz+P4Rl4KEVhY2BQSuQfMBgVg5hMJpOBQkKd2AwyMGCWUhZ2k2TwkkFWISwsjsF9uu96lPM4TuflWn+/6/O9vtfLmyAIGSAFvPNncQW+vQmC8P0vkj+lriJA+Fn4er0ynU45nU7o9XosFgsymexpfV8AlUqFbDbL4XC4J5hMJmq1Gm63+wvkAVCtVun1ekSjUcxmMwqFgnq9TjweR6VSsV6v+fj4eIA8tZDP59nv95TLZemzRqPheDwymUyw2WyvAdvtFqPRSDqdJpVKSX3QarWIrdrtdqjV6teAQqFAMpmUPM9mM1arlWQrk8mQy+Ve90B8tdvtLBYLxuMxwWCQ+XxOo9EgHA7/fgqbzQaDwYDL5WI4HNLtdvF6vbTbbfx+vwQ4n88olco77KGJnU4Hn8+Hx+Oh3+9LlVitViKRCOKEms0mo9EIcdSf8QAolUrEYrE74HK5SGpyuZxQKCQBBoMBTqfzOUAkizuQSCQoFovSp0AgQKvV4lfL9FCB6G+5XOJwOO4Kt9sNcbQ6ne7pOv+XY/qnc/4BX6PgwxPwjlEAAAAASUVORK5CYII=" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rolex's Website</title>
+    <script type="module" crossorigin src="/3D-Portfolio/assets/index-5a9790c2.js"></script>
+    <link rel="stylesheet" href="/3D-Portfolio/assets/index-3585b51d.css">
+  </head>
+  <body>
+
+    <canvas id="canvas"></canvas>   
+
+    <main>
+
+      <header>
+		<div class="page_one">
+			<div class="pg_header">
+				<h1>Rolex Alexander</h1>
+				<p>🚀 Welcome to my website!</p>
+			</div>
+		</div>
+      </header>
+      
+      <section>
+		<div class="section_one">
+			<h2>📜 Manifesto</h2>
+			<br>
+			<p>
+				Step into my first 3D website, a cosmic concept designed to spark inspiration. This theme was born from a powerful quote that stuck with me: "Aim for the stars, and even if you fall short, you'll still soar among them." It's my portfolio's cornerstone, a reminder that embracing the journey toward greatness yields something truly remarkable. It's in savoring every step that we often uncover greatness and wonder beyond our expectations.
+			</p>
+			<br>
+			<p>"Shoot for the moon. Even if you miss, you'll land among the stars." Norman Vincent Peale</p>
+		</div>
+      </section>
+
+      <section class="section_two">
+        <h2>👩🏽‍🚀 Inspiration for 2024</h2>
+
+        <p>
+			In the journey of our lives, what truly matters isn't the things we collect but the person we grow to be. Stepping into 2024, let's take to heart Inky Johnson's powerful words: "It's not what you acquire; it's who you become." It's not about the stuff we gather but about the resilience we build, the kindness we share, and the character we develop. This year, let's focus not just on getting things but on becoming better versions of ourselves—stronger, kinder, and more resilient. Let's create a story where our growth and integrity shine brighter than any possession, inspiring everyone we meet along the way.
+        </p>
+
+        <p>
+        	🏆 Quote: "Its not what you acquire is who you become". Inky Johnson
+        </p>
+
+      </section>
+
+      <div class="quote">
+        <h2>The best way out is always through <br>-Robert Frost</h2>
+	  </div>
+
+      <section class="section_one">
+        <h2>🌮 Work History</h2>
+
+        <h3>VOSS QUENCH It/ Delivery Manager</h3>
+        <p>
+        	Develop and implement a plan for Saturday water deliveries, including scheduling, logistics, and coordination. Keep detailed records of financial transactions related to the deliveries, including payments to the delivery driver.
+        </p>
+        <h3>V75inc / AI Engineer</h3>
+        <p>
+        	Develop and maintain cutting-edge conversational AI technology, troubleshooting and resolving errors in existing AI products, optimize performance, and upgrade user interfaces.
+        </p>
+      </section>
+
+      <div class="quote_two">
+        <h2>Embrace the unknown, for within it lies the canvas of infinite possibilities.</h2>
+	  </div>
+
+
+    </main>
+    
+    
+	<script type="x-shader/x-fragment" id="fragmentshader">
+
+		uniform vec3 color;
+		uniform float opacity;
+
+		varying vec3 vColor;
+
+		void main() {
+
+			gl_FragColor = vec4( vColor * color, opacity );
+
+		}
+
+	</script>
+	<script type="x-shader/x-vertex" id="vertexshader">
+
+		uniform float amplitude;
+
+		attribute vec3 displacement;
+		attribute vec3 customColor;
+
+		varying vec3 vColor;
+
+		void main() {
+
+			vec3 newPosition = position + amplitude * displacement;
+
+			vColor = customColor;
+
+			gl_Position = projectionMatrix * modelViewMatrix * vec4( newPosition, 1.0 );
+
+		}
+
+	</script>
+  </body>
+</html>
